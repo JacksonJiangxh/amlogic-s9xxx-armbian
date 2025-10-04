@@ -174,7 +174,9 @@ init_var() {
                 custom_name="${2// /}"
                 if [[ "${custom_name}" == "none" ]]; then
                     custom_name=""
-                [[ "${custom_name:0:1}" != "-" ]] && custom_name="-${custom_name}"
+                else
+                    [[ "${custom_name:0:1}" != "-" ]] && custom_name="-${custom_name}"
+                fi
                 shift 2
             else
                 error_msg "Invalid -n parameter [ ${2} ]!"
