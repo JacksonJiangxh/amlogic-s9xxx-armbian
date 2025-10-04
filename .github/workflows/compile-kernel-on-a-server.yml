@@ -87,6 +87,7 @@ on:
         options:
           - -ophub
           - -yourname
+          - none
 
 env:
   TZ: Etc/UTC
