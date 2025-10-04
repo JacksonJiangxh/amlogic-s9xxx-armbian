@@ -262,7 +262,7 @@ runs:
                 docker exec -i "${docker_container}" bash -c 'bash "$0" -u && bash "$0" "$@"' "${docker_script}" "${make_args[@]}"
             else
                 echo -e "Using the original system to compile the kernel."
-                sudo ./recompile "${make_args[@]}"
+                sudo ./rebuildkernel "${make_args[@]}"
             fi
 
             cd ${{ github.action_path }}
