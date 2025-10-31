@@ -163,7 +163,7 @@ jobs:
         with:
           build_target: kernel
           kernel_source: ${{ inputs.kernel_source || 'unifreq' }}  # 定时触发时使用默认值
-          kernel_version: ${{ inputs.kernel_version || '6.1.y_6.6.y_6.12.y' }}  # 定时触发时使用默认值
+          kernel_version: ${{ inputs.kernel_version || '6.6.y_6.12.y' }}  # 定时触发时使用默认值
           kernel_auto: ${{ inputs.kernel_auto != false }}  # 定时触发时默认true
           delete_source: ${{ inputs.delete_source != false }}  # 定时触发时默认true
           kernel_package: ${{ inputs.kernel_package || 'all' }}  # 定时触发时使用默认值
