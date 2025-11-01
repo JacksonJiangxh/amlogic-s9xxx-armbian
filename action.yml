@@ -240,17 +240,28 @@ runs:
             [[ -n "${docker_compile}" ]] && echo -e "The docker container [ ${docker_container} ] is running."
 
             echo -e "Build kernel compilation command."
+            
+            # 给空变量补默认值，完全对齐 workflow 的 default
+            kernel_source="${{ inputs.kernel_source || 'unifreq' }}"
+            kernel_version="${{ inputs.kernel_version || '6.6.y_6.12.y' }}"
+            kernel_auto="${{ inputs.kernel_auto != false && 'true' || 'true' }}"
+            kernel_package="${{ inputs.kernel_package || 'all' }}"
+            kernel_sign="${{ inputs.kernel_sign || 'none' }}"
+            kernel_toolchain="${{ inputs.kernel_toolchain || 'gcc' }}"
+            compress_format="${{ inputs.compress_format || 'xz' }}"
+            delete_source="${{ inputs.delete_source != false && 'true' || 'true' }}"
+            silent_log="${{ inputs.silent_log != false && 'true' || 'true' }}"
+            
             make_command=""
-            [[ -n "${{ inputs.kernel_source }}" ]] && make_command="${make_command} -r ${{ inputs.kernel_source }}"
-            [[ -n "${{ inputs.kernel_version }}" ]] && make_command="${make_command} -k ${{ inputs.kernel_version }}"
-            [[ -n "${{ inputs.kernel_auto }}" ]] && make_command="${make_command} -a ${{ inputs.kernel_auto }}"
-            [[ -n "${{ inputs.kernel_package }}" ]] && make_command="${make_command} -m ${{ inputs.kernel_package }}"
-            [[ -n "${{ inputs.auto_patch }}" ]] && make_command="${make_command} -p ${{ inputs.auto_patch }}"
-            [[ -n "${{ inputs.kernel_sign }}" ]] && make_command="${make_command} -n ${{ inputs.kernel_sign }}"
-            [[ -n "${{ inputs.kernel_toolchain }}" ]] && make_command="${make_command} -t ${{ inputs.kernel_toolchain }}"
-            [[ -n "${{ inputs.compress_format }}" ]] && make_command="${make_command} -c ${{ inputs.compress_format }}"
-            [[ -n "${{ inputs.delete_source }}" ]] && make_command="${make_command} -d ${{ inputs.delete_source }}"
-            [[ -n "${{ inputs.silent_log }}" ]] && make_command="${make_command} -s ${{ inputs.silent_log }}"
+            [[ -n "$kernel_source" ]] && make_command="${make_command} -r $kernel_source"
+            [[ -n "$kernel_version" ]] && make_command="${make_command} -k $kernel_version"
+            [[ -n "$kernel_auto" ]]   && make_command="${make_command} -a $kernel_auto"
+            [[ -n "$kernel_package" ]] && make_command="${make_command} -m $kernel_package"
+            [[ -n "$kernel_sign" ]]   && make_command="${make_command} -n $kernel_sign"
+            [[ -n "$kernel_toolchain" ]] && make_command="${make_command} -t $kernel_toolchain"
+            [[ -n "$compress_format" ]] && make_command="${make_command} -c $compress_format"
+            [[ -n "$delete_source" ]] && make_command="${make_command} -d $delete_source"
+            [[ -n "$silent_log" ]]   && make_command="${make_command} -s $silent_log"
             read -r -a make_args <<< "${make_command}"
 
             # Choose Ubuntu or a Docker container to compile the kernel.
