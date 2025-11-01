@@ -171,10 +171,9 @@ jobs:
           kernel_toolchain: ${{ inputs.kernel_toolchain || 'gcc' }}  # 定时触发时使用默认值
           compress_format: ${{ inputs.compress_format || 'xz' }}  # 定时触发时使用默认值
           silent_log: ${{ inputs.silent_log != false }}  # 定时触发时默认true
-
       - name: Upload Kernel to Release
         uses: ncipollo/release-action@main
-        if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
+        if: env.PACKAGED_STATUS == 'success' && !cancelled()
         with:
           tag: kernel_stable
           artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
