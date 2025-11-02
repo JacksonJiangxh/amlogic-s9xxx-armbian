@@ -90,7 +90,7 @@ on:
           - none
   # 新增定时触发配置（cron 表达式，UTC 时区）
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 16 * * *'
 env:
   TZ: Etc/UTC
 
